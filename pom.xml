@@ -6,7 +6,7 @@
 
   <groupId>de.unistuttgart</groupId>
   <artifactId>authentification-validator</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>v0.0.1</version>
 
   <name>authentification-validator</name>
   <url>https://github.com/Gamify-IT/authentification-validator</url>
