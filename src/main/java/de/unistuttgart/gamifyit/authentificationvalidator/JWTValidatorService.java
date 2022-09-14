@@ -23,11 +23,12 @@ import java.util.List;
 public class JWTValidatorService {
 
     private final String keycloakIssuer;
-
+    private final String keycloakUrl;
     private JwkProvider jwkProvider;
 
-    public JWTValidatorService(final String keycloakIssuer) throws MalformedURLException {
+    public JWTValidatorService(final String keycloakIssuer, final String keycloakUrl) throws MalformedURLException {
     this.keycloakIssuer = keycloakIssuer;
+    this.keycloakUrl = keycloakUrl;
     this.getJwkProvider();
     }
 
@@ -37,8 +38,8 @@ public class JWTValidatorService {
      * @throws MalformedURLException if issuer is invalid
      */
     public void getJwkProvider() throws MalformedURLException {
-        log.info("Use Issuer " + keycloakIssuer);
-        final String url = keycloakIssuer + "/protocol/openid-connect/certs";
+        log.info("Use keycloak URL " + keycloakUrl);
+        final String url = keycloakUrl + "/protocol/openid-connect/certs";
         jwkProvider = new UrlJwkProvider(new URL(url));
     }
 
