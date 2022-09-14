@@ -9,7 +9,14 @@
   <version>v0.0.1</version>
 
   <name>authentification-validator</name>
-  <url>https://github.com/Gamify-IT/authentification-validator</url>
+
+  <distributionManagement>
+    <repository>
+        <id>sqa-artifactory</id>
+        <name>SQA Artifactory-releases</name>
+        <url>https://rss-artifactory.ddnss.org/artifactory/libs-release</url>
+    </repository>
+  </distributionManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -53,18 +60,4 @@
     </dependency>
   </dependencies>
 
-  <profiles>
-    <profile>
-      <id>github</id>
-      <repositories>
-        <repository>
-          <id>github</id>
-          <url>https://maven.pkg.github.com/Gamify-IT/authentification-validator</url>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
-        </repository>
-      </repositories>
-    </profile>
-  </profiles>
 </project>
