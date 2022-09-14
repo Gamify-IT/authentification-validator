@@ -81,7 +81,7 @@ public class JWTValidatorService {
 
         }catch (TokenExpiredException | JwkException e) {
             ResponseStatusException exception = new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is invalid!");
-            log.warn("Access denied {}", exception.getMessage());
+            log.warn("Access denied {} \n {}", exception.getMessage(), e.getMessage());
             throw exception;
         }
     }
