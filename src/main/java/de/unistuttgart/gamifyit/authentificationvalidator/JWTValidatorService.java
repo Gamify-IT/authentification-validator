@@ -1,4 +1,4 @@
-package de.unistuttgart.authentificationvalidator;
+package de.unistuttgart.gamifyit.authentificationvalidator;
 
 import com.auth0.jwk.JwkException;
 import com.auth0.jwk.JwkProvider;
