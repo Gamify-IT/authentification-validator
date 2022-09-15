@@ -29,9 +29,9 @@ public class JWTValidatorService {
     private JwkProvider jwkProvider;
 
     public JWTValidatorService(@Value("${keycloak.issuer}") final String keycloakIssuer,
-                               @Value("${keycloak.url}") final String keycloakUrl, String keycloakIssuer1, String keycloakUrl1) throws MalformedURLException {
-        this.keycloakIssuer = keycloakIssuer1;
-        this.keycloakUrl = keycloakUrl1;
+                               @Value("${keycloak.url}") final String keycloakUrl) throws MalformedURLException {
+        this.keycloakIssuer = keycloakIssuer;
+        this.keycloakUrl = keycloakUrl;
         this.getJwkProvider();
     }
 
