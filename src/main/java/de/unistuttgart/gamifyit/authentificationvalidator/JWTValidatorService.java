@@ -30,9 +30,7 @@ public class JWTValidatorService {
     private final String keycloakUrl;
     private JwkProvider jwkProvider;
 
-    public JWTValidatorService(final String keycloakIssuer, final String keycloakUrl) throws MalformedURLException {
-        this.keycloakIssuer = keycloakIssuer;
-        this.keycloakUrl = keycloakUrl;
+    public JWTValidatorService() throws MalformedURLException {
         this.getJwkProvider();
     }
 
