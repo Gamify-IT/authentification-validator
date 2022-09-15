@@ -10,7 +10,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.MalformedURLException;
@@ -20,16 +22,18 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 
 @Slf4j
+@Service
 public class JWTValidatorService {
-
+    @Value("${keycloak.issuer}")
     private final String keycloakIssuer;
+    @Value("${keycloak.url}")
     private final String keycloakUrl;
     private JwkProvider jwkProvider;
 
     public JWTValidatorService(final String keycloakIssuer, final String keycloakUrl) throws MalformedURLException {
-    this.keycloakIssuer = keycloakIssuer;
-    this.keycloakUrl = keycloakUrl;
-    this.getJwkProvider();
+        this.keycloakIssuer = keycloakIssuer;
+        this.keycloakUrl = keycloakUrl;
+        this.getJwkProvider();
     }
 
     /**
@@ -80,7 +84,7 @@ public class JWTValidatorService {
             log.info("Verified User " + jwt.getClaim("preferred_username"));
             return jwt;
 
-        }catch (TokenExpiredException | JwkException e) {
+        } catch (TokenExpiredException | JwkException e) {
             ResponseStatusException exception = new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is invalid!");
             log.warn("Access denied {} - {}\n{}", exception.getMessage(), e.getMessage(), e);
             throw exception;
