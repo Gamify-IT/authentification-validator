@@ -24,13 +24,14 @@ import java.util.List;
 @Slf4j
 @Service
 public class JWTValidatorService {
-    @Value("${keycloak.issuer}")
     private final String keycloakIssuer;
-    @Value("${keycloak.url}")
     private final String keycloakUrl;
     private JwkProvider jwkProvider;
 
-    public JWTValidatorService() throws MalformedURLException {
+    public JWTValidatorService(@Value("${keycloak.issuer}") final String keycloakIssuer,
+                               @Value("${keycloak.url}") final String keycloakUrl, String keycloakIssuer1, String keycloakUrl1) throws MalformedURLException {
+        this.keycloakIssuer = keycloakIssuer1;
+        this.keycloakUrl = keycloakUrl1;
         this.getJwkProvider();
     }
 
