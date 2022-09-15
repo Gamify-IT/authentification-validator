@@ -35,8 +35,8 @@ public class JWTValidatorService {
      */
     @Autowired
     public void initializeJwkProvider() throws MalformedURLException {
-        log.info("Use keycloak URL " + properties.url);
-        final String url = properties.url + "/protocol/openid-connect/certs";
+        log.info("Use keycloak URL " + properties.getUrl());
+        final String url = properties.getUrl() + "/protocol/openid-connect/certs";
         jwkProvider = new UrlJwkProvider(new URL(url));
     }
 
@@ -62,7 +62,7 @@ public class JWTValidatorService {
         try {
             final DecodedJWT jwt = JWT.decode(token);
 
-            if (!properties.issuer.equals(jwt.getIssuer())) {
+            if (!properties.getIssuer().equals(jwt.getIssuer())) {
                 throw new InvalidParameterException(String.format("Unknown Issuer %s", jwt.getIssuer()));
             }
 
