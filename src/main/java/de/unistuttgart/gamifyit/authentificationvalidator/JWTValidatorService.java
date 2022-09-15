@@ -28,16 +28,13 @@ public class JWTValidatorService {
     @Autowired
     private Properties properties;
 
-    public JWTValidatorService() throws MalformedURLException {
-        this.getJwkProvider();
-    }
-
     /**
      * gets the keys from the issuer (keycloak)
      *
      * @throws MalformedURLException if issuer is invalid
      */
-    public void getJwkProvider() throws MalformedURLException {
+    @Autowired
+    public void initializeJwkProvider() throws MalformedURLException {
         log.info("Use keycloak URL " + properties.url);
         final String url = properties.url + "/protocol/openid-connect/certs";
         jwkProvider = new UrlJwkProvider(new URL(url));
