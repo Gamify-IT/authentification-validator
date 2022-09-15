@@ -10,7 +10,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,14 +24,11 @@ import java.util.List;
 @Slf4j
 @Service
 public class JWTValidatorService {
-    private final String keycloakIssuer;
-    private final String keycloakUrl;
     private JwkProvider jwkProvider;
+    @Autowired
+    private Properties properties;
 
-    public JWTValidatorService(@Value("${keycloak.issuer}") final String keycloakIssuer,
-                               @Value("${keycloak.url}") final String keycloakUrl) throws MalformedURLException {
-        this.keycloakIssuer = keycloakIssuer;
-        this.keycloakUrl = keycloakUrl;
+    public JWTValidatorService() throws MalformedURLException {
         this.getJwkProvider();
     }
 
@@ -41,8 +38,8 @@ public class JWTValidatorService {
      * @throws MalformedURLException if issuer is invalid
      */
     public void getJwkProvider() throws MalformedURLException {
-        log.info("Use keycloak URL " + keycloakUrl);
-        final String url = keycloakUrl + "/protocol/openid-connect/certs";
+        log.info("Use keycloak URL " + properties.url);
+        final String url = properties.url + "/protocol/openid-connect/certs";
         jwkProvider = new UrlJwkProvider(new URL(url));
     }
 
@@ -68,7 +65,7 @@ public class JWTValidatorService {
         try {
             final DecodedJWT jwt = JWT.decode(token);
 
-            if (!keycloakIssuer.equals(jwt.getIssuer())) {
+            if (!properties.issuer.equals(jwt.getIssuer())) {
                 throw new InvalidParameterException(String.format("Unknown Issuer %s", jwt.getIssuer()));
             }
 
