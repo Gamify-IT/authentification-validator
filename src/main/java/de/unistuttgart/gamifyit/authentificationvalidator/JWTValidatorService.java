@@ -10,7 +10,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.MalformedURLException;
@@ -20,25 +22,21 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 
 @Slf4j
+@Service
 public class JWTValidatorService {
-
-    private final String keycloakIssuer;
-
     private JwkProvider jwkProvider;
-
-    public JWTValidatorService(final String keycloakIssuer) throws MalformedURLException {
-    this.keycloakIssuer = keycloakIssuer;
-    this.getJwkProvider();
-    }
+    @Autowired
+    private Properties properties;
 
     /**
      * gets the keys from the issuer (keycloak)
      *
      * @throws MalformedURLException if issuer is invalid
      */
-    public void getJwkProvider() throws MalformedURLException {
-        log.info("Use Issuer " + keycloakIssuer);
-        final String url = keycloakIssuer + "/protocol/openid-connect/certs";
+    @Autowired
+    public void initializeJwkProvider() throws MalformedURLException {
+        log.info("Use keycloak URL " + properties.getUrl());
+        final String url = properties.getUrl() + "/protocol/openid-connect/certs";
         jwkProvider = new UrlJwkProvider(new URL(url));
     }
 
@@ -64,7 +62,7 @@ public class JWTValidatorService {
         try {
             final DecodedJWT jwt = JWT.decode(token);
 
-            if (!keycloakIssuer.equals(jwt.getIssuer())) {
+            if (!properties.getIssuer().equals(jwt.getIssuer())) {
                 throw new InvalidParameterException(String.format("Unknown Issuer %s", jwt.getIssuer()));
             }
 
@@ -79,9 +77,9 @@ public class JWTValidatorService {
             log.info("Verified User " + jwt.getClaim("preferred_username"));
             return jwt;
 
-        }catch (TokenExpiredException | JwkException e) {
+        } catch (TokenExpiredException | JwkException e) {
             ResponseStatusException exception = new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is invalid!");
-            log.warn("Access denied {}", exception.getMessage());
+            log.warn("Access denied {} - {}\n{}", exception.getMessage(), e.getMessage(), e);
             throw exception;
         }
     }
