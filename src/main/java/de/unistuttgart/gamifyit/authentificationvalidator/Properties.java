@@ -1,10 +1,12 @@
 package de.unistuttgart.gamifyit.authentificationvalidator;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @ConfigurationProperties(prefix = "keycloak")
 @Configuration
+@ComponentScan
 public class Properties {
 
     private String issuer = "";
@@ -14,7 +16,7 @@ public class Properties {
         return issuer;
     }
 
-    public void setIssuer(String issuer) {
+    public void setIssuer(final String issuer) {
         this.issuer = issuer;
     }
 
@@ -22,7 +24,7 @@ public class Properties {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 }
