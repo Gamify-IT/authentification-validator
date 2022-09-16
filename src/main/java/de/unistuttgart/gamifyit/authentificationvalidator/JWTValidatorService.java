@@ -8,23 +8,23 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.InvalidParameterException;
 import java.security.interfaces.RSAPublicKey;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @Service
 public class JWTValidatorService {
+
     private JwkProvider jwkProvider;
+
     @Autowired
     private Properties properties;
 
@@ -69,16 +69,16 @@ public class JWTValidatorService {
             RSAPublicKey publicKey = selectPublicKey(jwt);
 
             Algorithm algorithm = Algorithm.RSA256(publicKey, null);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(jwt.getIssuer())
-                    .build();
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(jwt.getIssuer()).build();
 
             verifier.verify(token);
             log.info("Verified User " + jwt.getClaim("preferred_username"));
             return jwt;
-
         } catch (TokenExpiredException | JwkException e) {
-            ResponseStatusException exception = new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is invalid!");
+            ResponseStatusException exception = new ResponseStatusException(
+                HttpStatus.UNAUTHORIZED,
+                "Token is invalid!"
+            );
             log.warn("Access denied {} - {}\n{}", exception.getMessage(), e.getMessage(), e);
             throw exception;
         }
@@ -91,9 +91,16 @@ public class JWTValidatorService {
      * @throws ResponseStatusException Unauthorized if user is no lecturer
      */
     public void checkLecturer(String accessToken) {
-        final List<String> roles = (List<String>) validate(accessToken).getClaims().get("realm_access").asMap().get("roles");
+        final List<String> roles = (List<String>) validate(accessToken)
+            .getClaims()
+            .get("realm_access")
+            .asMap()
+            .get("roles");
         if (!roles.contains("lecturer")) {
-            ResponseStatusException exception = new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User is no lecturer!");
+            ResponseStatusException exception = new ResponseStatusException(
+                HttpStatus.UNAUTHORIZED,
+                "User is no lecturer!"
+            );
             log.warn("Access denied {}", exception.getMessage());
             throw exception;
         }
