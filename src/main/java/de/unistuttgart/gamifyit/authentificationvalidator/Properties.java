@@ -4,6 +4,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Properties containing the keycloak url and issuer-url
+ * Gets configuration with prefix "keycloak" from the application properties
+ */
 @ConfigurationProperties(prefix = "keycloak")
 @Configuration
 @ComponentScan
