@@ -7,22 +7,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Properties {
 
-  private String issuer = "";
-  private String url = "";
+    private String issuer = "";
+    private String url = "";
 
-  public String getIssuer() {
-    return issuer;
-  }
+    public String getIssuer() {
+        return issuer;
+    }
 
-  public void setIssuer(String issuer) {
-    this.issuer = issuer;
-  }
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
+    }
 
-  public String getUrl() {
-    return url;
-  }
+    public String getUrl() {
+        return url;
+    }
 
-  public void setUrl(String url) {
-    this.url = url;
-  }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

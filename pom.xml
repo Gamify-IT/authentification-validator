@@ -80,7 +80,7 @@
                 <configuration>
                     <prettierJavaVersion>1.5.0</prettierJavaVersion>
                     <printWidth>120</printWidth>
-                    <tabWidth>2</tabWidth>
+                    <tabWidth>4</tabWidth>
                     <useTabs>false</useTabs>
                     <ignoreConfigFile>true</ignoreConfigFile>
                     <ignoreEditorConfig>true</ignoreEditorConfig>
