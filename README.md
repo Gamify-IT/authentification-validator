@@ -31,7 +31,7 @@ Needs following properties from the application:
 <dependency>
     <groupId>de.uni-stuttgart.gamify-it</groupId>
     <artifactId>authentification-validator</artifactId>
-    <version>v0.0.1</version>
+    <version>v0.0.2</version>
 </dependency>
 ```
 

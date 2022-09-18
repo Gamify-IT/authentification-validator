@@ -6,7 +6,7 @@
 
     <groupId>de.uni-stuttgart.gamify-it</groupId>
     <artifactId>authentification-validator</artifactId>
-    <version>v0.0.2-dev</version>
+    <version>v0.0.2</version>
 
     <name>authentification-validator</name>
 
