@@ -35,6 +35,11 @@ Needs following properties from the application:
 </dependency>
 ```
 
+### Configuration
+
+To ensure that the application is scanning all the files you have to add ```@SpringBootApplication(scanBasePackages={
+"de.unistuttgart"})``` to your SpringBootApplication!
+
 ## Class diagram
 
 ![package](https://user-images.githubusercontent.com/102458061/190691184-0d0bb396-f715-4178-8ca7-beec4c32698d.png)
