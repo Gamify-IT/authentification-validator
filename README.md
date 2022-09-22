@@ -1,17 +1,32 @@
 # Authentification Validator
 
-This is a spring service which validates jwt access tokens issued by keycloak. On invalid token it throws the
-corresponding ResponseStatusException. \
-This service is used by all Gamify-IT backends to validate the users.
+This is a spring service which validates jwt access tokens issued by keycloak. \
+When it encounters an invalid token, it throws a `ResponseStatusException` with the corresponding HTTP status. \
+This service is used by all Gamify-IT backends to validate the users and to require authentication for specific routes.
+
+<!-- TOC -->
+* [Links](#links)
+* [Usage](#usage)
+    * [Properties](#properties)
+    * [Needed Dependencies](#needed-dependencies)
+* [Class diagram](#class-diagram)
+<!-- TOC -->
+
+## Links
+
+- The developer docs can be found [here](https://gamifyit-docs.readthedocs.io/en/latest/dev-manuals/authentication/authentication-validator.html).
+- For more info about the authentication cookie, see the [keycloak manual](https://gamifyit-docs.readthedocs.io/en/latest/dev-manuals/authentication/keycloak.html).
 
 ## Usage
 
+### Properties
+
 Needs following properties from the application:
 
-| property key    | description                                  | example                                                    |
-|-----------------|----------------------------------------------|------------------------------------------------------------|
-| keycloak.url    | the realm url to fetch the certificates from | keycloak.url=http://localhost/keycloak/realms/Gamify-IT    |
-| keycloak.issuer | the issuer mentioned in the tokens           | keycloak.issuer=http://localhost/keycloak/realms/Gamify-IT |
+| Property key    | Environment variable | Description                                  | Example                                                    |
+|-----------------|----------------------|----------------------------------------------|------------------------------------------------------------|
+| keycloak.url    | KEYCLOAK_URL         | the realm url to fetch the certificates from | keycloak.url=http://localhost/keycloak/realms/Gamify-IT    |
+| keycloak.issuer | KEYCLOAK_ISSUER      | the issuer mentioned in the tokens           | keycloak.issuer=http://localhost/keycloak/realms/Gamify-IT |
 
 ### Needed Dependencies
 
@@ -37,5 +52,4 @@ Needs following properties from the application:
 
 ## Class diagram
 
-![package](https://user-images.githubusercontent.com/102458061/190691184-0d0bb396-f715-4178-8ca7-beec4c32698d.png)
-
+![class diagram](https://raw.githubusercontent.com/Gamify-IT/docs/main/dev-manuals/authentication/assets/authentication_validator_class_diagram.webp)
